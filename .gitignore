@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+
+# dependencies & build output
+node_modules/
+dist/
+
+# local env files (API keys)
+*.local
+
+# logs
+*.log
+
+# local ship artifacts, not part of the source repo
+varsity-cfb/
+varsity-cfb-ship.zip
+/package-lock.json

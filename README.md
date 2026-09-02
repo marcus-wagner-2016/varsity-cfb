@@ -1,51 +1,39 @@
-# Varsity CFB — deploy package
+# Varsity CFB
 
-## What's in here
+Author: Marcus Wagner
 
-- `dist/` — the built app (HTML, JS, CSS, logo, web manifest)
-- `server.js` — serves `dist/` and proxies `/espn-api/*` to ESPN
-- `package.json` — defines `npm start`
+A simple app that displays scores and stats from college football. Easy. Simple. That's it.
 
-No `npm install` is needed. `server.js` uses only Node built-ins and the
-app is already compiled into `dist/`.
+**Live site:** https://marcus-wagner-2016.github.io/varsity-cfb/
 
-## Requirements
+## How it works
 
-Node 18 or newer (`node --version`).
+- `react/` — the app source (React + Vite)
+- `.github/workflows/deploy.yml` — builds the app and deploys it to GitHub Pages on every push to `main`
 
-## Run it
+Scores come from ESPN's public scoreboard API, fetched directly from the browser.
+The Vite dev server proxies those requests (`/espn-api`) because ESPN's bot
+protection rejects non-browser clients; production builds call ESPN directly.
+
+## Local development
 
 ```bash
-npm start
+cd react
+npm install
+npm run dev
 ```
 
-Then open http://localhost:8080.
-
-To use a different port:
+## Production build
 
 ```bash
-PORT=8081 npm start
-```
-
-If the port is already taken, the server exits with a message telling you so.
-
-## Deploy it
-
-Upload this whole folder to any host that runs Node (Render, Railway, Fly.io,
-a VPS, etc.) and set the start command to `npm start`. Those platforms set the
-`PORT` environment variable for you automatically.
-
-**This must run through `server.js`.** The app fetches `/espn-api/*`, which
-`server.js` forwards to ESPN — browsers cannot call ESPN's API directly (it is
-blocked by CORS and bot protection). Static-only hosts (Netlify drag-and-drop,
-GitHub Pages, S3 buckets) will not work with this package.
-
-## Rebuilding after code changes
-
-In the repo's `react/` folder:
-
-```bash
+cd react
 npm run build
 ```
 
-Then copy the new `dist/` (and `server.js` if it changed) into this package.
+To preview a production build locally with the ESPN proxy, `npm start` runs
+`react/server.js`, a dependency-free Node server that serves `dist/` on port 8080.
+
+## Deploying
+
+Push to `main`. The GitHub Actions workflow builds with
+`--base=/varsity-cfb/` and publishes to GitHub Pages automatically.
