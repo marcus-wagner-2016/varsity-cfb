@@ -1,13 +1,14 @@
 {
   "name": "Varsity CFB",
   "short_name": "Varsity CFB",
-  "start_url": "/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
   "icons": [
     {
-      "src": "/varsity-cfb-app-logo.png",
+      "src": "./varsity-cfb-app-logo.png",
       "sizes": "1024x1024",
       "type": "image/png"
     }
